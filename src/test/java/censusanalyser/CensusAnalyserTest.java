@@ -29,10 +29,4 @@ public class CensusAnalyserTest {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
         }
     }
-
-    /*@Test
-    public void givenIndianCensusData_WhenSortedOnState_ShouldReturnSortedREsult() {
-        CensusAnalyser censusAnalyser = new CensusAnalyser();
-        String sortedCensusData = censusAnalyser.getStateWiseSortedCensusData();
-    }*/
 }
