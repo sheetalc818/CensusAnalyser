@@ -2,7 +2,6 @@ package censusanalyser;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-
 import java.io.Reader;
 import java.util.Iterator;
 
