@@ -1,22 +1,24 @@
 package censusanalyser;
 
-import java.util.Comparator;
-
-public class IndiaCensusDAO {
+public class CensusDAO {
     public double population;
-    public double densityPerSqKm;
-    public double area;
+    public double populationDensity;
+    public double totalArea;
     public String state;
     public String stateCode;
 
-    public IndiaCensusDAO(IndiaCensusCSV indiaCensusCSV) {
+    public CensusDAO(IndiaCensusCSV indiaCensusCSV) {
         state = indiaCensusCSV.state;
-        area = indiaCensusCSV.areaInSqKm;
-        densityPerSqKm = indiaCensusCSV.densityPerSqKm;
+        totalArea = indiaCensusCSV.areaInSqKm;
+        populationDensity = indiaCensusCSV.densityPerSqKm;
         population = indiaCensusCSV.population;
     }
 
-    public IndiaCensusDAO(IndiaStateCodeCSV indiaStateCodeCSV){
-        stateCode = indiaStateCodeCSV.stateCode;
+    public CensusDAO(USCensusCSV usCensusCSV) {
+        state = usCensusCSV.state;
+        stateCode = usCensusCSV.stateCode;
+        population = usCensusCSV.population;
+        populationDensity = usCensusCSV.populationDensity;
+        totalArea = usCensusCSV.totalArea;
     }
 }
