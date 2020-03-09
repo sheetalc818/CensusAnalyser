@@ -16,7 +16,7 @@ public class CensusAnalyser {
     }
 
     public enum FieldName{
-        STATE,POPULATION,DENSITY
+        STATE,POPULATION,DENSITY,AREA
     }
 
     List<IndiaCensusDAO> censusList = null ;
@@ -28,6 +28,7 @@ public class CensusAnalyser {
         this.sortMap.put(FieldName.POPULATION,Comparator.comparing(census->census.population));
         this.sortMap.put(FieldName.STATE,Comparator.comparing(census->census.state));
         this.sortMap.put(FieldName.DENSITY,Comparator.comparing(census->census.densityPerSqKm));
+        this.sortMap.put(FieldName.AREA,Comparator.comparing(census->census.area));
     }
 
     public int loadIndiaCensusData(Country india, String csvFilePath) throws CensusAnalyserException {
@@ -46,7 +47,7 @@ public class CensusAnalyser {
         }
     }
 
-    public int loadIndianSateCode(String csvFilePath) throws CensusAnalyserException {
+    public int loadIndianStateCode(String csvFilePath) throws CensusAnalyserException {
         try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));){
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
 
