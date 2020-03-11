@@ -2,10 +2,6 @@ package censusanalyser;
 
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -14,6 +10,10 @@ public class CensusAnalyser {
 
     public enum FieldName{
         STATE,POPULATION,DENSITY,AREA
+    }
+
+    public enum Country{
+        INDIA,US
     }
 
     List<CensusDAO> censusList = null ;
@@ -30,28 +30,9 @@ public class CensusAnalyser {
         this.sortMap.put(FieldName.AREA,Comparator.comparing(census->census.totalArea));
     }
 
-    public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
-        censusStateMap = new CensusLoader().loadCensusData(csvFilePath,IndiaCensusCSV.class);
+    public int loadCensusData(Country country, String... csvFilePath) throws CensusAnalyserException {
+        censusStateMap = new CensusLoader().loadCensusData(country,csvFilePath);
         return censusStateMap.size();
-    }
-
-    public int loadUSCensusData(String usCensusCsvFilePath) throws CensusAnalyserException {
-        censusStateMap = new CensusLoader().loadCensusData(usCensusCsvFilePath,USCensusCSV.class);
-        return censusStateMap.size();
-    }
-
-    public int loadIndianStateCode(String csvFilePath) throws CensusAnalyserException {
-        try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));){
-            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-
-            Iterator<IndiaStateCodeCSV> stateCSVIterator = csvBuilder.getCSVFileIterator(reader,IndiaStateCodeCSV.class) ;
-            return this.getCount(stateCSVIterator);
-        } catch (IOException e) {
-            throw new CensusAnalyserException(e.getMessage(),
-                    CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
-        } catch (CSVBuilderException e) {
-            throw new CensusAnalyserException(e.getMessage(),CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
-        }
     }
 
     private <E> int getCount(Iterator<E> iterator){
