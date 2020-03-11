@@ -7,6 +7,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
@@ -81,9 +82,12 @@ public class CensusAnalyser {
     }
 
     public String getSortedCensusCSV(FieldName field) throws CensusAnalyserException {
-        if (censusList == null || censusList.size() == 0 ){
+        if (censusStateMap == null || censusStateMap.size() == 0 ){
             throw new CensusAnalyserException("No_census_data",CensusAnalyserException.ExceptionType.NO_CENSUS_DATA);
         }
+
+        Comparator<CensusDAO> comparing = Comparator.comparing(census -> census.state);
+        censusList = censusStateMap.values().stream().collect(Collectors.toList());
         this.sort(this.sortMap.get(field));
         String sortedStateCensusJson = new Gson().toJson(censusList);
         return sortedStateCensusJson;
