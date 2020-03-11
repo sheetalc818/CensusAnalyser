@@ -46,14 +46,14 @@ public class CensusAnalyser {
             throw new CensusAnalyserException("No_census_data",CensusAnalyserException.ExceptionType.NO_CENSUS_DATA);
         }
 
-        //Comparator<CensusDAO> comparing = Comparator.comparing(census -> census.state);
+        Comparator<CensusDAO> censusComparator = Comparator.comparing(census -> census.state);
         censusList = censusStateMap.values().stream().collect(Collectors.toList());
-        this.sort(this.sortMap.get(field));
+        this.sort(this.sortMap.get(field),censusList);
         String sortedStateCensusJson = new Gson().toJson(censusList);
         return sortedStateCensusJson;
     }
 
-    private void sort(Comparator<CensusDAO> censusComparator) {
+    private void sort(Comparator<CensusDAO> censusComparator, List<CensusDAO> censusList) {
         for (int i=0;i<censusList.size()-1;i++){
             for (int j=0;j<censusList.size()-i-1;j++){
                 CensusDAO census1 = censusList.get(j);
